@@ -1,0 +1,65 @@
+Problem Statement:
+
+Create a Contact Management System using React that allows users to manage their contacts efficiently. The application should have the following screens and functionalities:
+
+1. Home Screen:
+
+Welcome message to the user.
+
+Navigation links to other screens (Contacts, Add Contact, Contact Details).
+
+2. Contacts Screen:
+
+Display a list of all contacts.
+
+Each contact should display the name and a short description.
+
+Navigation link to add a new contact.
+
+3. Add Contact Screen:
+
+A form to add new contact details (name, phone number, email, and description).
+
+Validation for required fields.
+
+A button to submit the form and add the contact to the list.
+
+4. Contact Details Screen:
+
+Display full details of a selected contact (name, phone number, email, and description).
+
+Navigation link to go back to the contacts list.
+
+Technical Requirements:
+
+State Management (useState):
+
+Use useState to manage the state of contacts and form inputs.
+
+Side Effects (useEffect):
+
+Use useEffect to fetch initial contact data (if any) from local storage or an API.
+
+Use useEffect to update the local storage whenever the contacts list changes.
+
+Memoization (useMemo):
+
+Use useMemo to optimize the performance of the contact details.
+
+Context API (useContext):
+
+Use useContext to create a global context for managing contacts that can be accessed across different components.
+
+References (useRef):
+
+Use useRef to manage focus on the form inputs.
+
+Routing:
+
+Use React Router for navigation between the Home, Add Contact, and Contact Details screens.
+
+Note: The last line of the third image says "instead of local storage use json-server". This likely indicates a preference to use a JSON server as the backend for storing contact data rather than relying solely on local storage.
+
+
+
+-keep it simple project
