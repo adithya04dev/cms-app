@@ -7,7 +7,7 @@
 
 # testing
 /coverage
-
+.cursorrules
 # production
 /build
 
