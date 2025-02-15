@@ -11,6 +11,7 @@ export const ContactProvider = ({ children }) => {
     fetchContacts();
   }, []);
 
+
   const fetchContacts = async () => {
     try {
       const response = await axios.get('http://localhost:3000/contacts');
@@ -42,9 +43,17 @@ export const ContactProvider = ({ children }) => {
       throw error;
     }
   };
+  const deleteContact=async(id)=>{
+    try {
+      await axios.delete(`http://localhost:3000/contacts/${id}`);
+      setContacts(contacts.filter(contact => contact.id !== id));
+    } catch (error) {
+      console.error('Error deleting contact:', error);
+    }
+  };
 
   return (
-    <ContactContext.Provider value={{ contacts, loading, addContact, getContact }}>
+    <ContactContext.Provider value={{ contacts, loading, addContact, getContact,deleteContact }}>
       {children}
     </ContactContext.Provider>
   );

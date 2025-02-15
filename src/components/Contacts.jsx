@@ -9,9 +9,7 @@ const Contacts = () => {
     return [...contacts].sort((a, b) => a.name.localeCompare(b.name));
   }, [contacts]);
 
-  if (loading) {
-    return <div >Loading contacts...</div>;
-  }
+
 
   return (
     <div>
@@ -24,7 +22,7 @@ const Contacts = () => {
           Add New Contact
         </Link>
       </div>
-      <div  >
+      <div class='contact-list' >
         {sortedContacts.map((contact) => (
           <div className="contact-container" >
           <Link

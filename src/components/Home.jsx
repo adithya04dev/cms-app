@@ -7,8 +7,8 @@ const Home = () => {
       <h1>Welcome to Contact Manager</h1>
       <p>Manage your contacts efficiently with our easy-to-use system</p>
       <div>
-        <Link to="/contacts">View Contacts</Link> {' '}
-        <Link to="/add-contact">Add New Contact</Link>
+        <Link to="/contacts"  className="view-button" >View Contacts</Link> {' '}
+        <Link to="/add-contact"  className="contact-button" >Add New Contact</Link>
       </div>
     </div>
   );

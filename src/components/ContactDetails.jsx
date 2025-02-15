@@ -1,41 +1,41 @@
 import React, { useContext, useEffect, useState, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ContactContext } from '../context/ContactContext';
+import { useNavigate } from 'react-router-dom';
 
 const ContactDetails = () => {
   const { id } = useParams();
-  const { getContact } = useContext(ContactContext);
+  const navigate = useNavigate();
+
+  const { getContact,deleteContact } = useContext(ContactContext);
   const [contact, setContact] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchContact = async () => {
+      
+    
       try {
         const data = await getContact(id);
         setContact(data);
-        setLoading(false);
       } catch (error) {
         console.error('Error fetching contact details:', error);
-        setLoading(false);
       }
-    };
 
+    };
     fetchContact();
+
   }, [id, getContact]);
 
-  const contactInfo = useMemo(() => {
-    if (!contact) return null;
-    return {
-      name: contact.name,
-      phone: contact.phone,
-      email: contact.email,
-      description: contact.description
-    };
-  }, [contact]);
+  const handleDelete = async () => {
+    try{
+      await deleteContact(id);
+      navigate('/contacts');
+    } catch (error) {
+      console.error('Error deleting contact:', error);
+    }
 
-  if (loading) {
-    return <div>Loading contact details...</div>;
-  }
+
+  };
 
   if (!contact) {
     return (
@@ -51,7 +51,7 @@ const ContactDetails = () => {
   return (
     <div className="contact-details-container">
       <div>
-        <h2>{contactInfo.name}</h2>
+        <h2>{contact.name}</h2>
         <Link to="/contacts" className="back-link">
           Back to Contacts
         </Link>
@@ -60,19 +60,21 @@ const ContactDetails = () => {
       <div>
         <div>
           <h3>Phone</h3>
-          <p>{contactInfo.phone}</p>
+          <p>{contact.phone}</p>
         </div>
 
         <div>
           <h3>Email</h3>
-          <p>{contactInfo.email}</p>
+          <p>{contact.email}</p>
         </div>
 
         <div>
           <h3>Description</h3>
-          <p>{contactInfo.description}</p>
+          <p>{contact.description}</p>
         </div>
       </div>
+      <button onClick={handleDelete}>Delete Contact</button>
+
     </div>
   );
 };
