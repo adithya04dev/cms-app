@@ -1,19 +1,31 @@
 import React, { useContext, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ContactContext } from '../context/ContactContext';
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Button,
+  TextField,
+  Box,
+  Typography,
+  Container,
+  Alert
+} from '@mui/material';
 
 const AddContact = () => {
   const { addContact } = useContext(ContactContext);
   const navigate = useNavigate();
   const nameRef = useRef();
-
+  const [openDialog, setOpenDialog] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     email: '',
     description: ''
   });
-
   const [errors, setErrors] = useState({});
 
   const validateForm = () => {
@@ -28,21 +40,31 @@ const AddContact = () => {
     return newErrors;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const newErrors = validateForm();
     
     if (Object.keys(newErrors).length === 0) {
-      try {
-        await addContact(formData);
-        navigate('/contacts');
-      } catch (error) {
-        setErrors({ submit: 'Error adding contact. Please try again.' });
-      }
+      setOpenDialog(true);
     } else {
       setErrors(newErrors);
       nameRef.current?.focus();
     }
+  };
+
+  const handleConfirm = async () => {
+    try {
+      await addContact(formData);
+      setOpenDialog(false);
+      navigate('/contacts');
+    } catch (error) {
+      setErrors({ submit: 'Error adding contact. Please try again.' });
+      setOpenDialog(false);
+    }
+  };
+
+  const handleDiscard = () => {
+    setOpenDialog(false);
   };
 
   const handleChange = (e) => {
@@ -61,69 +83,105 @@ const AddContact = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto">
-      <h2 className="text-2xl font-bold mb-6">Add New Contact</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block mb-1">Name</label>
-          <input
-            ref={nameRef}
-            type="text"
+    <Container maxWidth="sm">
+      <Box sx={{ mt: 4, mb: 4 }}>
+        <Typography variant="h4" component="h2" gutterBottom>
+          Add New Contact
+        </Typography>
+        
+        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 2 }}>
+          <TextField
+            inputRef={nameRef}
+            margin="normal"
+            fullWidth
+            id="name"
+            label="Name"
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className={`w-full p-2 border rounded ${errors.name ? 'border-red-500' : 'border-gray-300'}`}
+            error={!!errors.name}
+            helperText={errors.name}
           />
-          {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
-        </div>
-
-        <div>
-          <label className="block mb-1">Phone</label>
-          <input
-            type="tel"
+          
+          <TextField
+            margin="normal"
+            fullWidth
+            id="phone"
+            label="Phone"
             name="phone"
+            type="tel"
             value={formData.phone}
             onChange={handleChange}
-            className={`w-full p-2 border rounded ${errors.phone ? 'border-red-500' : 'border-gray-300'}`}
+            error={!!errors.phone}
+            helperText={errors.phone}
           />
-          {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
-        </div>
-
-        <div>
-          <label className="block mb-1">Email</label>
-          <input
-            type="email"
+          
+          <TextField
+            margin="normal"
+            fullWidth
+            id="email"
+            label="Email"
             name="email"
+            type="email"
             value={formData.email}
             onChange={handleChange}
-            className={`w-full p-2 border rounded ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
+            error={!!errors.email}
+            helperText={errors.email}
           />
-          {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
-        </div>
-
-        <div>
-          <label className="block mb-1">Description</label>
-          <textarea
+          
+          <TextField
+            margin="normal"
+            fullWidth
+            id="description"
+            label="Description"
             name="description"
+            multiline
+            rows={3}
             value={formData.description}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded"
-            rows="3"
           />
-        </div>
+          
+          {errors.submit && (
+            <Alert severity="error" sx={{ mt: 2 }}>
+              {errors.submit}
+            </Alert>
+          )}
+          
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2,width: '50%',mx:'auto', display:'block' }}
+          >
+            Add Contact
+          </Button>
+        </Box>
+      </Box>
 
-        {errors.submit && (
-          <p className="text-red-500 text-sm">{errors.submit}</p>
-        )}
-
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
-        >
-          Add Contact
-        </button>
-      </form>
-    </div>
+      <Dialog
+        open={openDialog}
+        onClose={handleDiscard}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Confirm Add Contact"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to add this contact? This action cannot be undone.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDiscard} color="error">
+            Discard
+          </Button>
+          <Button onClick={handleConfirm} color="success" autoFocus>
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Container>
   );
 };
 

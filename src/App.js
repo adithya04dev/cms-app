@@ -6,14 +6,13 @@ import Home from './components/Home';
 import Contacts from './components/Contacts';
 import AddContact from './components/AddContact';
 import ContactDetails from './components/ContactDetails';
-import './index.css';
+// import './index.css';
 const App = () => {
   return (
     <ContactProvider>
       <Router>
-        <div className="min-h-screen bg-gray-100">
           <Navbar />
-          <div className="container mx-auto px-4 py-8">
+          <div >
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/contacts" element={<Contacts />} />
@@ -21,7 +20,6 @@ const App = () => {
               <Route path="/contact/:id" element={<ContactDetails />} />
             </Routes>
           </div>
-        </div>
       </Router>
     </ContactProvider>
   );

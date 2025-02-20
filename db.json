@@ -1,11 +1,53 @@
 {
   "contacts": [
     {
-      "id": "a4ff",
-      "name": "gowtham",
-      "phone": "7810198765",
-      "email": "gowtham@gmail.cmo",
-      "description": "my guide"
+      "id": "b5gg",
+      "name": "Alice Smith",
+      "phone": "555-123-4567",
+      "email": "alice.smith@example.com",
+      "description": "Friend from college"
+    },
+    {
+      "id": "c6hh",
+      "name": "Bob Johnson",
+      "phone": "555-987-6543",
+      "email": "bob.johnson@example.com",
+      "description": "Work colleague"
+    },
+    {
+      "id": "d7ii",
+      "name": "Charlie Brown",
+      "phone": "555-246-8013",
+      "email": "charlie.brown@example.com",
+      "description": "Neighbor"
+    },
+    {
+      "id": "e8jj",
+      "name": "Diana Miller",
+      "phone": "555-135-7902",
+      "email": "diana.miller@example.com",
+      "description": "Family member"
+    },
+    {
+      "id": "b818",
+      "name": "ADITHYA BALAGONI",
+      "phone": "8331018009",
+      "email": "adithyabalagoni11@gmail.com",
+      "description": "hello!"
+    },
+    {
+      "id": "b86e",
+      "name": "ADITHYA BALAGONI",
+      "phone": "8331018009",
+      "email": "adithyabalagoni11@gmail.com",
+      "description": "hello wo!"
+    },
+    {
+      "id": "7367",
+      "name": "parthutez",
+      "phone": "7815952971",
+      "email": "parthutez@gmail.com",
+      "description": "classmate!"
     }
   ]
 }
